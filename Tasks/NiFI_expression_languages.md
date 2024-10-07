@@ -43,9 +43,6 @@ flowchart TD
 | var1 | true |
 | var2 | false |
 
-### Example
-
-![038bb0efe863d408bec96fa8a27330c2.png](:/4b32484cb5ee4a6a965452fc5da9b50d)
 
 ## Solution
 
