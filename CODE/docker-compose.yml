@@ -111,5 +111,5 @@ services:
       - 28080:80
     network_mode: bridge
     environment:
-        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:- [EMAIL_address]}
+        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-[EMAIL_address]}
         PGADMIN_DEFAULT_PASSWORD: [password]
