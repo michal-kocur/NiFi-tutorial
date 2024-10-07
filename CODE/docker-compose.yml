@@ -1,0 +1,115 @@
+###--NiFi---###################################################################################################
+version: '3'
+services:
+  nifi:
+    image: apache/nifi:1.20.0
+    container_name: nifi
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ./Docker_Mount/V_NiFi_VOLUME:/opt/nifi/nifi-current/VOLUME
+    ports:
+      # HTTP
+      - 8080:8080/tcp
+      # HTTPS
+      #- 8443:8443/tcp
+      # Remote Input Socket
+      - 10000:10000/tcp
+      # JVM Debugger
+      - 8000:8000/tcp
+      # Prometheus metrics
+      - 9093:9093
+      # Cluster Node Protocol
+      #- 11443:11443/tcp
+    environment:
+      ########## Web ##########
+      # nifi.web.http.host
+      NIFI_WEB_HTTP_HOST: '0.0.0.0'
+      # nifi.web.http.port
+      #   HTTP Port
+      NIFI_WEB_HTTP_PORT: 8080
+###--NiFi-Registry---###################################################################################################
+  registry:
+    network_mode: bridge
+    image: apache/nifi-registry:1.20.0
+    container_name: nifi-registry
+    restart: unless-stopped
+    ports:
+     - "18080:18080"
+    environment:
+     - LOG_LEVEL=INFO
+     - NIFI_REGISTRY_DB_DIR=/opt/nifi-registry/database
+     - NIFI_REGISTRY_FLOW_PROVIDER=file
+     - NIFI_REGISTRY_FLOW_STORAGE_DIR=/opt/nifi-registry/flow_storage
+###--Redis---###################################################################################################  
+  redis:
+    network_mode: bridge
+    container_name: redis
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass [set_up_the_password_here]
+###--Kafka---###################################################################################################  
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: [IP_ADDRESS]
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+###--Prometheus---###################################################################################################  
+  prometheus:
+    image: prom/prometheus:v2.36.2
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    restart: always
+    volumes:
+      - ./Docker_Mount/V_prometheus.yml:/etc/prometheus/prometheus.yml
+###--minIO-S3---################################################################################################### 
+  minio:
+    image: minio/minio
+    network_mode: bridge
+    container_name: S3
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./Docker_Mount/V_MINIO_storage:/data
+    command: server --console-address ":9001" /data
+    env_file: ./Docker_Mount/.env
+    restart: always
+###---PostgreSQL---###################################################################################################
+  postgres:
+    network_mode: bridge
+    container_name: PostgreSQL
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: [user]
+      POSTGRES_PASSWORD: [password]
+      POSTGRES_DB: nifi_db
+    volumes:
+    - ./Docker_Mount/V_PostgreSQL-data/:/var/lib/postgresql/data/
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    ports:
+      - 28080:80
+    network_mode: bridge
+    environment:
+        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-[EMAIL_address]}
+        PGADMIN_DEFAULT_PASSWORD: [password]
