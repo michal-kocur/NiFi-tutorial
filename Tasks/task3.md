@@ -59,6 +59,7 @@ flowchart TD
     end 
 
 ```
+> FF - flowfile / event
 
 ## API call and example of the output
 
