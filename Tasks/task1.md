@@ -43,12 +43,12 @@ Create a dataflow allowing to count sum and product of 2 numbers provided in the
 ```mermaid
 flowchart TD
 	subgraph Main
-		A((Generate \n main FF)) --> B[Split events into\n separete FFs]
-		B --> C[Extract data from \nFF content]
+		A((Generate main FF)) --> B[Split events into separete FFs]
+		B --> C[Extract data from FF content]
 		C --> D[Count sum and product ]
-		D --> E[Data transformation\n adjustment to proper format]
-		E --> F((Send to\n Kafka))
-		E --> G((Sent to\n Redis))
+		D --> E[Data transformation adjustment to proper format]
+		E --> F((Send to Kafka))
+		E --> G((Sent to Redis))
 	end 
 ```
 > FF - flowfile / event
