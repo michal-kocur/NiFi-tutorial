@@ -84,26 +84,26 @@ Create a dataflow which counts employee working time based on events (stop worki
 ```mermaid
 flowchart TD
 	subgraph Main
-		A((Generate \n main FF)) --> L[Split events into\n separete FFs]
-		L --> N[Extract data from \nFF content]
-		N --> B{Divide FF \n to groups}
-		B -- Kind: Start --> C[Put FF to redis DB\n with proper key]
-		B -- Kind: Stop --> D[Fetch start FF to an \nattribute from redis \n based on key ]
-		D -- Start object not found --> P[Loop created \nwith control rate]
+		A((Generate main FF)) --> L[Split events into separete FFs]
+		L --> N[Extract data from FF content]
+		N --> B{Divide FF to groups}
+		B -- Kind: Start --> C[Put FF to redis DB with proper key]
+		B -- Kind: Stop --> D[Fetch start FF to an attribute from redis based on key ]
+		D -- Start object not found --> P[Loop created with control rate]
 		P --> D
-		D --> F[Fetch data from S3 and \n put them to FF content]
+		D --> F[Fetch data from S3 and put them to FF content]
 		F --> R[Count working time]
-		R --> S[Extract data from \nFF content]
+		R --> S[Extract data from FF content]
 		S --> T[Count Salary]
-		T --> G[Data transformation\n adjustment to proper format]
-		G --> H((Send to\n Kafka))
+		T --> G[Data transformation adjustment to proper format]
+		G --> H((Send to Kafka))
 		C -.-> D
 	end 
 	subgraph Enrichament
-		I((Generate \n enrichment FF)) --> M[Split events into\n separete FFs]
-		M --> O[Extract data from \nFF content]
-		O --> J[Data transformation \n adjustment to proper format]
-		J --> K((Send data\n to S3))
+		I((Generate enrichment FF)) --> M[Split events into separete FFs]
+		M --> O[Extract data from FF content]
+		O --> J[Data transformation  adjustment to proper format]
+		J --> K((Send data to S3))
 		K -.-> F
 	end
 ```
