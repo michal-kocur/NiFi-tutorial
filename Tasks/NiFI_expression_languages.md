@@ -42,6 +42,7 @@ flowchart TD
 | number | 5   |
 | var1 | true |
 | var2 | false |
+| JSON | {  <br>    "test" : "true",  <br>    "test2" : "true"  <br>} |
 
 
 ## Solution
