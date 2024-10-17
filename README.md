@@ -12,4 +12,4 @@ Here you can find code and files requeired to create an environment to work
 Here you can find task to do during traings
 
 # Solutions
-in proress .... solutions for tasks section
+Here you can find solutions for tasks
