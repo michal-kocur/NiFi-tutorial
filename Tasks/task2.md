@@ -1,9 +1,8 @@
 # Worktime counting system
 
 ## Task description:
-Create a dataflow which counts employee working time based on events (stop working, start working). Each employee has two events in the main dataset (start and stop) and there is also one enrichment file with personal data for all employee. The common primary key for both datasets is CK (employee ID number). Datasets are stored in the bottom the this file
+Create a dataflow which counts employee working time based on events (stop working, start working). Each employee has two events in the main dataset (start and stop) and there is also one enrichment file with personal data for all employees. The common primary key for both datasets is CK (employee ID number). Datasets are stored in the bottom the this file
 
-***
 
 ## Main Flow:
 
@@ -12,71 +11,71 @@ Create a dataflow which counts employee working time based on events (stop worki
 - Generating events upon the start and end of work
     - Events for the start of work are pushed to Redis.
     - Events for the end of work are sent to Kafka, enriched with information from Redis (start time of work) and data from S3 regarding the employee's personal information.
-- Personal data of the employee is stored in S3.
+- Personal data of the employees are stored in S3.
 - Matching should be based on the "CK" field.
 
 ### Detailed description
 
 #### Main Process
 
-1. **Generate Main FF (A)**:
+1. **Generate Main FF**:
    - The workflow begins with the generation of the main FlowFile, which serves as the primary data entity for processing.
 
-2. **Split Events into Separate FFs (L)**:
+2. **Split Events into Separate FFs**:
    - The main FlowFile is split into separate FlowFiles to handle individual events separatelly.
 
-3. **Extract Data from FF Content (N)**:
+3. **Extract Data from FF Content**:
    - Relevant data is extracted from the content of each FlowFile for further processing.
 
-4. **Divide FF to Groups (B)**:
+4. **Divide FF to Groups**:
    - The FlowFiles are categorized into two groups: "Start" and "Stop" events.
 
-5. **Handling "Start" Events (C)**:
+5. **Handling "Start" Events**:
    - For FlowFiles identified as "Start," they are stored in Redis with a unique key for future reference.
 
-6. **Handling "Stop" Events (D)**:
+6. **Handling "Stop" Events**:
    - For "Stop" FlowFiles, the process retrieves the corresponding "Start" FlowFile from Redis using the key.
    - If the "Start" FlowFile is not found, a loop is created (P) to control the rate of retries until the "Start" FlowFile becomes available.
 
-7. **Fetch Data from S3 (F)**:
+7. **Fetch Data from S3**:
    - Once the "Start" FlowFile is successfully fetched, additional data is retrieved from S3 to enrich the FlowFile content.
 
-8. **Count Working Time (R)**:
+8. **Count Working Time**:
    - The working time is calculated based on the retrieved data.
 
-9. **Extract Data from FF Content (S)**:
+9. **Extract Data from FF Content**:
    - Relevant information is extracted from the updated FlowFile content.
 
-10. **Count Salary (T)**:
+10. **Count Salary**:
     - The salary is calculated based on the extracted data and the working time.
 
-11. **Data Transformation (G)**:
+11. **Data Transformation**:
     - The processed data undergoes transformation to ensure it meets the required format for further processing.
 
-12. **Send to Kafka (H)**:
+12. **Send to Kafka**:
     - Finally, the enriched and transformed FlowFile is sent to Kafka for further handling or distribution.
 
-13. **Connection (C -.-> D)**:
+13. **Connection**:
     - There is a back-reference from the "Start" event stored in Redis to the "Stop" event, allowing the system to access "Start" FlowFiles directly if needed.
 
 #### Enrichment Process
 
-1. **Generate Enrichment FF (I)**:
+1. **Generate Enrichment FF**:
    - A separate process generates enrichment FlowFiles that contain additional data necessary for enhancing the main FlowFiles.
 
-2. **Split Events into Separate FFs (M)**:
+2. **Split Events into Separate FFs**:
    - Similar to the main process, these enrichment FlowFiles are split into separate entities for processing.
 
-3. **Extract Data from FF Content (O)**:
+3. **Extract Data from FF Content**:
    - Relevant data is extracted from the content of the enrichment FlowFiles.
 
-4. **Data Transformation (J)**:
+4. **Data Transformation**:
    - The extracted data is transformed to ensure it is in the proper format.
 
-5. **Send Data to S3 (K)**:
+5. **Send Data to S3**:
    - The transformed enrichment data is sent to S3 for storage or future use.
 
-6. **Connection (K -.-> F)**:
+6. **Connection**:
    - There is a reverse relationship indicating that the enriched data stored in S3 can later be integrated back into the main FlowFiles during processing.
     
 ## Data flow model:

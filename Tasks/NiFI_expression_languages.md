@@ -1,4 +1,4 @@
-# NiFi Expression Languages
+# NiFi Expression Language
 
 ## Task description:
 
@@ -7,7 +7,7 @@ Create a dataflow which allows to perform below tasks:
 1.  Compare if var1 equals var2 (as string)
 2.  Return "succeeded" if var1 equals true (as string)
 3.  extract value for "test" key from FF content
-4.  check if number attribute is greated then 10
+4.  check if number attribute is greater then 10
 5.  convert var1 to uppercase
 
 * * *

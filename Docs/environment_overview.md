@@ -5,30 +5,27 @@
     - The Environment Structure:
     - Short overview of all technologies:
 - Code
-- How to run the code
-- File strukture
 
-* * *
 
 # Environment
 
-## The Environment contains:
+### The Environment contains:
 
-- ### Apache NiFi
+- #### Apache NiFi
     
-- ### Apache Nifi Registry
+- #### Apache Nifi Registry
     
-- ### Prometheus
+- #### Prometheus
     
-- ### S3 \[minIO\]
+- #### S3 \[minIO\]
     
-- ### Redis
+- #### Redis
     
-- ### Apache Kafka
+- #### Apache Kafka
     
-- ### Apache Zookeeper
+- #### Apache Zookeeper
     
-- ### PostgreSQL (server & client)
+- #### PostgreSQL (server & client)
     
 
 ## The Environment Structure:
@@ -75,6 +72,9 @@ PostgreSQL is an open-source relational database management system known for its
 
 pgAdmin is an open-source administration tool for PostgreSQL databases, offering a user-friendly graphical interface. It allows users to manage databases, execute SQL queries, and visualize data. Key features include a powerful query editor, backup and restore options, and cross-platform support. pgAdmin simplifies database management for both beginners and experienced users.
 
+### Pointainer
+
+Container with web user interface allowing us to manage and control other container in the docker. Web UI can be accessed on 9443 port. To be able to use this container go to **/CODE/Pointainer/** and run ```sudo docker-compose up -d``` in this folder
 
 # Code:
 
@@ -244,76 +244,3 @@ scrape_configs:
     static_configs:
       - targets: ["[IP_ADDRESS]:9093"]
 ```
-
-# How to run the code
-
-### Docker instalation:
-
-- docker,
-- docker compose
-- docker-desktop \[optional\]
-
-> Find the instruction in the internet
-
-### Download the source code from repository and change all required parameters
-
-```Text
-###--- How to replase the code
-variable = [IP_ADDRESS]
-
-###--- replaced value
-variable = 192.168.1.1
-```
-
-### What to replace:
-
-- docker-compose.yml
-    - Redis section:
-        - \[set_up_the_password_here\]
-    - Kafka
-        - \[IP_ADDRESS\]
-	- postgres
-		- \[user]
-		- \[pasword\
-	- pgadmin
-		- \[EMAIL_address]
-		- \[password]
-- .env
-    - \[user\]
-    - \[pass\]
-- Prometheus conf
-    - \[IP_ADDRESS\]
-
-### How to run the containers:
-
-```Bash
-###----START-----
-
-###--- run docker compose
-docker-compose up
- or
-sudo docker-compose up
-
-##--- run docker compose with streaming log to the file [recommended]
-docker-compose up > logs.log
- or
-sudo docker-compose up > logs.log
-
-###----STOP-----
-
-###--- remove / stop containers
-docker-compose down
- or
-sudo docker-compose down
-```
-
-# File strukture
-
-- NiFI_home_dir
-    - docker-compose.yml
-    - Docker_Mount/
-        - V_MINIO_storage/
-        - V_PostgreSQL-data/
-        - V_NiFi_VOLUME/
-        - .env
-        - V_prometheus.yml

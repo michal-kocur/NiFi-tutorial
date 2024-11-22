@@ -3,7 +3,6 @@
 ## Task description:
 Create a dataflow allowing to count sum and product of 2 numbers provided in the dataset. Dataset is a JSON list shown at the bottom of this file
 
-***
 
 ## Main Flow
 
@@ -11,32 +10,39 @@ Create a dataflow allowing to count sum and product of 2 numbers provided in the
 
 - Generating events containing two numbers: A, B
     - Flow should calculate: sum, product
-- The resulting flow should be sent to Kafka and Redis and should contain the numbers: A, B, sum(A, B), product(A, B)
+- The results should be sent to Kafka and Redis and should contain the numbers: A, B, sum(A, B), product(A, B)
 
 ### Detailed description
 
 #### Main Process
 
-1. **Generate Main FF (A)**:
+1. **Generate Main FF**:
    - The dataflow starts with the generation of the main FlowFile.
+   - Processor name: ```GenerateFlowFile```
 
-2. **Split Events into Separate FFs (B)**:
+2. **Split Events into Separate FFs**:
    - Then  main FlowFile is divided into separate FFs to handle individual events independently.
+   - Processor name: ```SpitJson```
 
-3. **Extract Data from FF Content (C)**:
+3. **Extract Data from FF Content**:
    - Relevant data is extracted from the content of each FlowFile. This step is crucial for performing calculations and transformations in subsequent stages.
+   - Processor name: ```EvaluateJsonPath```
 
-4. **Count Sum and Product (D)**:
-   - The extracted data is used to calculate both the sum and the product of the relevant values.
+4. **Count Sum and Product**:
+   - The extracted data is used to calculate both the sum and the product of the given values.
+   - Processor name: ```UpdateAttribute```
 
-5. **Data Transformation (E)**:
+5. **Data Transformation**:
    - The results from the calculations are transformed and adjusted to ensure they meet the required format we want to sent to Kafka and Redis
+   - Processor name: ```JoltTransformJson```
 
-6. **Send to Kafka (F)**:
-   - The transformed data is sent to Kafka.
+6. **Send to Kafka**:
+   - The transformed data are sent to Kafka.
+   - Processor name: ```PublishKafka_2_6```
 
-7. **Sent to Redis (G)**:
-   -  The transformed data is sent to Redis
+7. **Sent to Redis**:
+   -  The transformed data are sent to Redis
+   - Processor name: ```PutDistributedMapCache```
 
 ## Data flow model:
 

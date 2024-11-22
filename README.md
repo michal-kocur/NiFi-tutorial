@@ -1,3 +1,14 @@
+# First time here?
+
+This repository was created to help you get familiar with NiFi environment. To start go to **/Docs** section and read "**environment_overview.md**" and "**How_to_run_it.md**" manuals and read what you can find here and how to use it. 
+
+General summary of the whole repo you can find in this README file below:
+- Docs
+- CODE
+- Tasks
+- Solutions
+<br>
+<br>
 # Docs
 
 Directory contains documentation about the docker-compose file and the environment itself. You can find there also instructions how to configure basic NiFi components
@@ -19,8 +30,7 @@ Here you can find code and files required to create an environment to work. If y
 
 ##### If NiFi cannot start correctly at first deploy (first creation)
 
-- Give full permission access to V_NiFi_VOLUME directory (chmod 777 -R V_NiFi_VOLUME) or hash lise 9 10 in the docker-compose.yml (we are working on solving this issue)
-
+- Give full permission access to V_NiFi_VOLUME directory (chmod 777 -R V_NiFi_VOLUME) or hash lines 9 10 in the docker-compose.yml (we are working on solving this issue)
 # Tasks
 
 Here you can find task to do during traings:
@@ -59,6 +69,10 @@ In this dataflow we move to more complex and complicated desing.
 ### Task 4
 
 In this dataflow you will use what you have learned to build complex Incidents Report. Additionally you will find how to send email from NiFi, convert dates and perform time-related operations
+
+### Task 5
+
+In this task a X posts sentiment analyzer will be created. We will fetch 10 posts from X, then check their sentiment using python script and then, we will load properly transporm data to kafka topic.
 
 # Solutions
 
