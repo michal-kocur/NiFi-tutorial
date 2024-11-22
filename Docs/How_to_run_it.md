@@ -13,14 +13,15 @@
 ### Docker instalation:
 
 - docker,
-- docker compose
+- docker compose,
 - docker-desktop \[**optional**\]
 
+> [!TIP]  
 > Find the instruction in the internet
 
 ### Get configuration files
 
-> [!NOTE]  
+> [!IMPORTANT]  
 > Download the source code from repository and change all required parameters like shown below
 
 ```Bash
@@ -44,7 +45,7 @@ variable = 192.168.1.1
 
 <br>
 
-> [!NOTE]  
+> [!IMPORTANT]  
 > Username and password can be created and set by you. You will be using them later to log in to the system
 
 > [!WARNING]  

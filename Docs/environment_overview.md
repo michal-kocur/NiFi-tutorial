@@ -67,7 +67,7 @@ Redis is an open-source, in-memory data structure store used as a database, cach
 
 Apache Kafka is a distributed streaming platform designed to handle real-time data feeds. It is used for building real-time data pipelines and streaming applications. Kafka provides fault tolerance, scalability, and high throughput for publishing, subscribing, and storing streams of records in a fault-tolerant manner.
 
-> [!IMPORTANT]  
+> [!NOTE]  
 > In this project **Kafka** can be access via CMD via commands available in  `/opt/kafka_2.13-2.8.1/bin/` folder or external application like **Kafka Offset / Kafka Tool**.
 
 ### Zookeeper
@@ -262,5 +262,5 @@ scrape_configs:
       - targets: ["[IP_ADDRESS]:9093"]
 ```
 
-> [!IMPORTANT]  
+> [!TIP]  
 > If you want to run above code, go [here](./How_to_run_it.md) for detais.

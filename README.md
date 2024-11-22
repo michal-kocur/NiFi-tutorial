@@ -21,22 +21,23 @@ Here you will find instructions how to configure basic services in NiFi
 
 Environment overview:  
 ![NiFiaaC-Srodowisko.drawio.png](./Docs/NiFiaaC.png)
-> softwares with blue icon are not provided within this repo
 
-> [:point_up:]
-> For detailes go [here](./Docs/)
+> [!WARNING]  
+> Softwares with blue icon are not provided within this repo
+
+> [!TIP] 
+> For detailes go [here](./Docs/):point_up: 
 # CODE
 
 Here you can find code and files required to create an environment to work. If you do not know how to run docker-compose.yml file, go to  [**How_to_run_it.md**](./Docs/How_to_run_it.md) file in the Docs section.
 
-### Common issues description:
+> [!CAUTION] 
+>### Common issues description:
+>##### If NiFi cannot start correctly at first deploy (first creation)
+>- Give full permission access to V_NiFi_VOLUME directory (chmod 777 -R V_NiFi_VOLUME) or hash lines 9 10 in the docker-compose.yml (we are working on solving this issue)
 
-##### If NiFi cannot start correctly at first deploy (first creation)
-
-- Give full permission access to V_NiFi_VOLUME directory (chmod 777 -R V_NiFi_VOLUME) or hash lines 9 10 in the docker-compose.yml (we are working on solving this issue)
-
-> [:point_up:]
-> For detailes go [here](./CODE/)
+> [!TIP] 
+> For detailes go [here](./CODE/):point_up: 
 
 # Tasks
 
@@ -81,12 +82,12 @@ In this dataflow you will use what you have learned to build complex Incidents R
 
 In this task a X posts sentiment analyzer will be created. We will fetch 10 posts from X, then check their sentiment using python script and then, we will load properly transporm data to kafka topic.
 
-> [:point_up:]
-> For detailes go [here](./Tasks/)
+> [!TIP] 
+> For detailes go [here](./Tasks/):point_up: 
 
 # Solutions
 
 Here you can find solutions for tasks stored as flow definitions files (JSON). This format allows to import them using like process group.
 
-> [:point_up:]
-> For detailes go [here](./Solutions/)
+> [!TIP] 
+> For detailes go [here](./Solutions/):point_up: 
