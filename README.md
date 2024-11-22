@@ -1,6 +1,6 @@
 # First time here?
 
-This repository was created to help you get familiar with NiFi environment. To start go to [**Docs**](./Docs/)   section and read [**environment_overview.md**](./Docs/environment_overview.md) and [**How_to_run_it.md**](./Docs/How_to_run_it.md) manuals and read what you can find here and how to use it. 
+This repository was created to help you get familiar with NiFi environment. To start go to [**Docs**](./Docs/)   section and read [**environment_overview.md**](./Docs/environment_overview.md) and [**How_to_run_it.md**](./Docs/How_to_run_it.md) manuals. Check there what you can find in my repo and how to use it. 
 
 General summary of the whole repo you can find in this README file below:
 - [Docs](#docs)
