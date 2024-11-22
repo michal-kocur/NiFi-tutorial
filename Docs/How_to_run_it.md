@@ -2,7 +2,7 @@
 
 - [How to run the code](#how-to-run-the-code)
     - [Docker instalation](#docker-instalation)
-    - [Download the source code from repository and change all required parameters](#download-the-source-code-from-repository-and-change-all-required-parameters)
+    - [Get configuration files](#get-configuration-files)
     - [What to replace](#what-to-replace)
     - [How to run the containers](#how-to-run-the-containers)
 - [File strukture](#file-strukture)
@@ -18,7 +18,10 @@
 
 > Find the instruction in the internet
 
-### Download the source code from repository and change all required parameters
+### Get configuration files
+
+> [!NOTE]  
+> Download the source code from repository and change all required parameters like shown below
 
 ```Bash
 ###--- How to replase the code
@@ -30,28 +33,22 @@ variable = 192.168.1.1
 
 ### What to replace:
 
-- docker-compose.yml
-    - Redis section:
-        - \[set_up_the_password_here\]
-    - Kafka
-        - \[IP_ADDRESS\]
-	- postgres
-		- \[user]
-		- \[password\]
-	- pgadmin
-		- \[EMAIL_address\]
-		- \[password\]
-- .env
-    - \[user\]
-    - \[pass\]
-- Prometheus conf
-    - \[IP_ADDRESS\]
+| File Path | Section | placeholder | description |
+| --- | --- | --- | --- |
+| docker-compose.yml | redis | [set_up_the_password_here] | set up a password used to log in to redis server |
+| docker-compose.yml | Kafka | [IP_ADDRESS] | set up here your IP address you want to use.  <br>Ex: localhost, home VM IP |
+| docker-compose.yml | PostgreSQL | [user]  <br>[password] | Set up password and username you want to use to log in |
+| docker-compose.yml | pgAdmin | [EMAIL_address]  <br>[password] | Set up an email with proper domain (like example.com, server.loc) and password |
+| Docker_Moint / .env | ---  | [user]  <br>[pass] | user and password used to log in to S3 GUI. Set up strong password with smal and large letter and numbers with at least 8 characters. It's required to run the container properly |
+| Docker_Moint / V_prometheus.yml | config / nifi | [IP_ADDRESS] | set up here your IP address you want to use.  <br>Ex: localhost, home VM IP |
+
+<br>
 
 > [!NOTE]  
 > Username and password can be created and set by you. You will be using them later to log in to the system
 
 > [!WARNING]  
-> IP_ADDRESS is the host addres where your docker is installed. That could be for example "localhost"   
+> IP_ADDRESS is the host address where your docker is installed. That could be for example "localhost"   
 
 ### How to run the containers:
 
@@ -84,7 +81,7 @@ docker-compose down
 sudo docker-compose down
 ```
 
-# File strukture
+# File structure
 
 - NiFI_home_dir
     - docker-compose.yml
