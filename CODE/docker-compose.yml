@@ -54,11 +54,13 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
+    restart: always
     ports:
       - "2181:2181"
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
+    restart: always
     ports:
       - "9092:9092"
     environment:
@@ -96,6 +98,7 @@ services:
     network_mode: bridge
     container_name: PostgreSQL
     image: 'postgres:latest'
+    restart: always
     ports:
       - 5432:5432
     environment:
@@ -107,6 +110,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pg_admin
+    restart: always
     ports:
       - 28080:80
     network_mode: bridge

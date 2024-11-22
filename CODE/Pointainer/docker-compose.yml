@@ -5,7 +5,7 @@ services:
     container_name: portainer
     restart: always
     ports:
-      - "8000:8000"   # port HTTP
+      #- "8000:8000"   # port HTTP
       - "9443:9443"   # port HTTPS
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 

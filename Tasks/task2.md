@@ -20,63 +20,72 @@ Create a dataflow which counts employee working time based on events (stop worki
 
 1. **Generate Main FF**:
    - The workflow begins with the generation of the main FlowFile, which serves as the primary data entity for processing.
+   - Processor name: `GenerateFlowFile`
 
 2. **Split Events into Separate FFs**:
    - The main FlowFile is split into separate FlowFiles to handle individual events separatelly.
+   - Processor name: `SpitJson`
 
 3. **Extract Data from FF Content**:
    - Relevant data is extracted from the content of each FlowFile for further processing.
+   - Processor name: `EvaluateJsonPath`
 
 4. **Divide FF to Groups**:
-   - The FlowFiles are categorized into two groups: "Start" and "Stop" events.
+   - The FlowFiles are categorized into two groups: **Start** and **Stop** events.
+   - Processor name: `RouteOnAttribute`
 
 5. **Handling "Start" Events**:
-   - For FlowFiles identified as "Start," they are stored in Redis with a unique key for future reference.
+   - For FlowFiles identified as **Start** they are stored in Redis with a unique key for future reference.
+   - Processor name: `PutDistributedMapCache`
 
 6. **Handling "Stop" Events**:
-   - For "Stop" FlowFiles, the process retrieves the corresponding "Start" FlowFile from Redis using the key.
-   - If the "Start" FlowFile is not found, a loop is created (P) to control the rate of retries until the "Start" FlowFile becomes available.
+   - For **Stop** FlowFiles, the process retrieves the corresponding **Start** FlowFile from Redis using the key.
+   - If the **Start** FlowFile is not found, a loop is created to control the rate of retries until the **Start** FlowFile becomes available.
+   - Processor name: `FetchDistributedMapCache` , `ControlRate`
 
 7. **Fetch Data from S3**:
-   - Once the "Start" FlowFile is successfully fetched, additional data is retrieved from S3 to enrich the FlowFile content.
+   - Once the **Start** FlowFile is successfully fetched, additional data is retrieved from S3 to enrich the FlowFile content.
+   - Processor name: `FetchS3Object`
 
 8. **Count Working Time**:
    - The working time is calculated based on the retrieved data.
+   - Processor name: `UpdateAttribute`
 
 9. **Extract Data from FF Content**:
    - Relevant information is extracted from the updated FlowFile content.
+   - Processor name: `EvaluateJsonPath`
 
 10. **Count Salary**:
-    - The salary is calculated based on the extracted data and the working time.
+   - The salary is calculated based on the extracted data and the working time.
+   - Processor name: `UpdateAttribute`
 
 11. **Data Transformation**:
-    - The processed data undergoes transformation to ensure it meets the required format for further processing.
+   - The processed data undergoes transformation to ensure it meets the required format for further processing.
+   - Processor name: `JoltTransformJSON`
 
 12. **Send to Kafka**:
-    - Finally, the enriched and transformed FlowFile is sent to Kafka for further handling or distribution.
-
-13. **Connection**:
-    - There is a back-reference from the "Start" event stored in Redis to the "Stop" event, allowing the system to access "Start" FlowFiles directly if needed.
+   - Finally, the enriched and transformed FlowFile is sent to Kafka for further handling or distribution.
+   - Processor name: `PublishKafka_2_6`
 
 #### Enrichment Process
 
 1. **Generate Enrichment FF**:
    - A separate process generates enrichment FlowFiles that contain additional data necessary for enhancing the main FlowFiles.
+   - Processor name: `GenerateFlowFile`
 
 2. **Split Events into Separate FFs**:
    - Similar to the main process, these enrichment FlowFiles are split into separate entities for processing.
+   - Processor name: `SpitJson`
 
 3. **Extract Data from FF Content**:
    - Relevant data is extracted from the content of the enrichment FlowFiles.
+   - Processor name: `EvaluateJsonPath`
 
-4. **Data Transformation**:
-   - The extracted data is transformed to ensure it is in the proper format.
-
-5. **Send Data to S3**:
+4. **Send Data to S3**:
    - The transformed enrichment data is sent to S3 for storage or future use.
+   - Processor name: `PutS3Object`
 
-6. **Connection**:
-   - There is a reverse relationship indicating that the enriched data stored in S3 can later be integrated back into the main FlowFiles during processing.
+> **Connection**: There is a reverse relationship indicating that the enriched data stored in S3 can later be integrated back into the main FlowFiles during processing. Take a look on item `FetchS3Object` in **Main Flow**
     
 ## Data flow model:
 
@@ -98,7 +107,7 @@ flowchart TD
 		G --> H((Send to Kafka))
 		C -.-> D
 	end 
-	subgraph Enrichament
+	subgraph Enrichment
 		I((Generate enrichment FF)) --> M[Split events into separete FFs]
 		M --> O[Extract data from FF content]
 		O --> J[Data transformation  adjustment to proper format]
@@ -181,7 +190,7 @@ flowchart TD
 },
 {
   "name" : "Kasia",
-  "surname" : "Nowacka",
+  "surname" : "Nowacka",```
   "position" : "expert",
   "hourlyRate" : "50",
   "CK" : "AA44BB"

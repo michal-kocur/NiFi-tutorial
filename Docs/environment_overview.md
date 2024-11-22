@@ -1,32 +1,27 @@
 # Summary
 
-- Environment
-    - The Environment contains
-    - The Environment Structure:
-    - Short overview of all technologies:
-- Code
+- [Environment](#environment)
+    - [The Environment contains](#the-environment-contains)
+    - [The Environment Structure](#the-environment-structure)
+    - [Short overview of all technologies](#short-overview-of-all-technologies)
+- [Code](#code)
+    - [docker-compose.yml](#docker-composeyml)
+    - [.env](#env)
+    - [prometheus.yml](#prometheusyml)
 
 
 # Environment
 
 ### The Environment contains:
 
-- #### Apache NiFi
-    
-- #### Apache Nifi Registry
-    
-- #### Prometheus
-    
-- #### S3 \[minIO\]
-    
-- #### Redis
-    
-- #### Apache Kafka
-    
-- #### Apache Zookeeper
-    
-- #### PostgreSQL (server & client)
-    
+-  Apache NiFi
+-  Apache Nifi Registry
+-  Prometheus 
+-  S3 \[ minIO \]
+-  Redis 
+-  Apache Kafka
+-  Apache Zookeeper
+-  PostgreSQL (server & client)
 
 ## The Environment Structure:
 
@@ -37,14 +32,20 @@
 ### NiFi
 
 Apache NiFi is a powerful data routing and transformation system. It provides a graphical interface to design data flows and manage data processes in real-time. NiFi simplifies data ingestion, processing, and distribution across various systems and devices.
+> [!NOTE]  
+> In this project **NiFi** will be exposed on `http://[IP_ADDRESS]:8080`.
 
 ### NiFi Registry
 
 NiFi Registry is a version control and management system for NiFi flows. It allows users to save, track changes, and manage versions of data flows created in NiFi. NiFi Registry facilitates collaboration, reuse, and deployment of data flow configurations across environments.
+> [!NOTE]  
+> In this project **NiFi Registry** will be exposed on `http://[IP_ADDRESS]:18080`.
 
 ### Prometheus
 
 Prometheus is an open-source monitoring and alerting toolkit. It collects metrics from monitored targets by scraping HTTP endpoints. Prometheus stores data in a time-series database and allows querying and visualization of metrics using a built-in expression language and various visualization tools.
+> [!NOTE]  
+> In this project **Prometheus** will be exposed on `http://[IP_ADDRESS]:9090`.
 
 ### S3
 
@@ -52,13 +53,22 @@ Amazon Simple Storage Service (S3) is a scalable object storage service offered 
 
 **MinIO** - is an open-source, self-hosted object storage server compatible with Amazon S3. It allows users to store and manage large amounts of unstructured data in a distributed environment. minIO replicates the S3 API, enabling seamless integration with applications designed to work with S3 storage. As a lightweight and scalable solution, minIO is commonly used for various use cases, including data backup, archival, and serving static web content. It offers features such as data encryption, access control, and high availability, making it suitable for both small-scale deployments and enterprise-grade storage solutions
 
+> [!NOTE]  
+> In this project **S3** will be exposed on `http://[IP_ADDRESS]:9001`.
+
 ### Redis
 
 Redis is an open-source, in-memory data structure store used as a database, cache, and message broker. It supports various data structures such as strings, hashes, lists, sets, and more. Redis is known for its high performance, versatility, and rich set of features.
 
+> [!NOTE]  
+> In this project **Redis** can be access via CMD via command `redis-cli`.
+
 ### Kafka
 
 Apache Kafka is a distributed streaming platform designed to handle real-time data feeds. It is used for building real-time data pipelines and streaming applications. Kafka provides fault tolerance, scalability, and high throughput for publishing, subscribing, and storing streams of records in a fault-tolerant manner.
+
+> [!IMPORTANT]  
+> In this project **Kafka** can be access via CMD via commands available in  `/opt/kafka_2.13-2.8.1/bin/` folder or external application like **Kafka Offset / Kafka Tool**.
 
 ### Zookeeper
 
@@ -71,10 +81,17 @@ PostgreSQL is an open-source relational database management system known for its
 ### pgAdmin
 
 pgAdmin is an open-source administration tool for PostgreSQL databases, offering a user-friendly graphical interface. It allows users to manage databases, execute SQL queries, and visualize data. Key features include a powerful query editor, backup and restore options, and cross-platform support. pgAdmin simplifies database management for both beginners and experienced users.
+> [!NOTE]  
+> In this project **S3** will be exposed on `http://[IP_ADDRESS]:28080`.
+
 
 ### Pointainer
 
 Container with web user interface allowing us to manage and control other container in the docker. Web UI can be accessed on 9443 port. To be able to use this container go to **/CODE/Pointainer/** and run ```sudo docker-compose up -d``` in this folder
+
+> [!NOTE]  
+> In this project **S3** will be exposed on `http://[IP_ADDRESS]:9443`.
+
 
 # Code:
 
@@ -244,3 +261,6 @@ scrape_configs:
     static_configs:
       - targets: ["[IP_ADDRESS]:9093"]
 ```
+
+> [!IMPORTANT]  
+> If you want to run above code, go [here](./How_to_run_it.md) for detais.

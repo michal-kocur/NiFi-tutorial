@@ -2,17 +2,17 @@
 
 ## Task description:
 
-Fetch data about incidents from Service-Now and divide them into groups (groups list is in the table below). Format incidents to properly as specified in the section below (END Event) and for incidents which are active and assigned to a user sent the email as a reminder (other just send to kafka topic from he below table).
+Fetch data about incidents from Service-Now and divide them into groups (groups list is in the table below). Format incidents properly as specified in the section below (END Event) and for incidents which are active and assigned to a user, sent the email as a reminder (other just send to kafka topic from he below table).
 
 ## Detailed task content
 
-### 1\. Fetching Incidents
+### Fetching Incidents
 
 - **Action:** Fetch incidents from ServiceNow.
 - **Error Handling:** If there are failures during this step, generate a log message.
-    - Log Message content: "Failed to retrieve incidents from ServiceNow. Please check the connection and try again."
+    - **Log Message content:** `Failed to retrieve incidents from ServiceNow. Please check the connection and try again.`
 
-### 2\. Grouping FFs
+### Grouping FFs
 
 - **Decision Point:** Divide FFs into groups based on their active status:
     - **Active = True**
@@ -24,7 +24,7 @@ Fetch data about incidents from Service-Now and divide them into groups (groups 
             
             #### Active Group Processing
             
-            - If AG is not empty:
+            - If AG is **not empty**:
                 - Fetch additional data about the AG.
                 - Further categorize based on user assignment:
                     - **Assigned User = True**
@@ -35,7 +35,7 @@ Fetch data about incidents from Service-Now and divide them into groups (groups 
                     - **Assigned User = False**
                         - Adjust data format and send to Kafka.
                         - Log the action.
-            - If AG is empty:
+            - If AG is **empty**:
                 - Adjust data format and send to Kafka.
                 - Log the action.
     - **Active = False**
@@ -119,7 +119,7 @@ flowchart TD
 
 | Action | Value | Description |
 | --- | --- | --- |
-| Connection methon | GET | Fetch data without modyfication |
+| Connection methon | GET | Fetch data without modification |
 | URL | https://&lt;DEV-INSTANCE&gt;.service-now.com/api/now/table/incident | Endpoint to connect to |
 | &lt;DEV-INSTANCE&gt; | \-  | Service-now instance created for each training session. Will be provided during training |
 | Credentials: username & password | \-, - | Credentials separated for each Service-now user. Will be provided during training |

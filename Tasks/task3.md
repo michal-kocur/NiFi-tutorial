@@ -6,7 +6,7 @@
 
 1.  Retrieves a list of changes performed by users in flow configuration history from the NiFi API.
 2.  Extracts additional information about those users like names and emails from a PostgreSQL database.
-3.  Publishes data to Kafka with format from `END event` section.
+3.  Publishes data to Kafka with format from **END event** section.
 4.  Log success event
 
 ## Main Flow
@@ -26,17 +26,17 @@
     - Use SQL query to retrieve data `SELECT * FROM users WHERE ck = '${userIdentity}';`.
 4.  **Convert data to JSON**:
     
-    - Use the `ConvertAvroToJson` processor to convert data to readable JSON format.
-5.  **Put `actionDetails` to FF content**:
+    - Use the `ConvertAvroToJson` processor to convert data to readable JSON format and `EvaluateJsonPath` to extract missing data from FF content after executing SQL query.
+5.  **Put "actionDetails" to FF content**:
     
     - Use `AttributesToJSON` processor to change content in the FF and then remove unwanted characters using `ReplaceText`.
 6.  **Create output FF in correct shape**:
     
     - Use `JoltTransformJSON` processor to adjust FF to required shape.
-    - in case of any errors while processing resent `actionDetails` to FF content without removing unwanted characters and log that fact using `LogMessage` with proper comment
+    - in case of any errors while processing resent **actionDetails** to FF content without removing unwanted characters and log that fact using `LogMessage` with proper comment
 7.  **Logging**:
     
-    - Use the `LogAttribute` processor put email, operation to the logs without Properties and Payload of successfully processed FF.
+    - Use the `LogAttribute` processor put **email** and **operation** to the logs without Properties and Payload of successfully processed FF.
 
 ## Data flow model:
 

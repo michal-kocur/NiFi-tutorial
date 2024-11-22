@@ -1,6 +1,6 @@
 # Twitter / X posts sentiment analyzer
 
-Create a dataflow which loads 10 posts (twits) from X platforms and check their sentiment. To do so, you can use Textblob python module. Results with counted sentiment (polarity and subjectivity) send to katka topic (twitter_posts). 
+Create a dataflow which loads 10 posts (twits) from X platforms and check their sentiment. To do so, you can use Textblob python module. Results with counted sentiment (polarity and subjectivity) can be sent to katka topic (twitter_posts). 
 
 ## Main Flow:
 
@@ -18,7 +18,7 @@ Create a dataflow which loads 10 posts (twits) from X platforms and check their 
 ```mermaid
 flowchart TD
  	subgraph Main
-		A((Generate \n main FF)) --> B[Ask X API for posts]
+		A((Generate main FF)) --> B[Ask X API for posts]
 		B -- Response --> C[Split events into separete FFs]
 		C --> D[Extract data from FF content]
 		D --> E[Run Python script]
@@ -30,8 +30,7 @@ flowchart TD
 > FF - flowfile / event
 
 ## Python script:
-```Python
-
+```python
 from textblob import *
 
 def checkSentiment(tweet_content):
@@ -48,7 +47,6 @@ analysisPol, analysisSub = checkSentiment(twit_text)
 output = [analysisPol, analysisSub]
 
 print(output)
-
 ```
 
 ## How to get X account

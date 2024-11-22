@@ -1,11 +1,11 @@
 # Summary
 
-- How to run the code
-    - Docker instalation
-    - Download the source code from repository and change all required parameters
-    - What to replace
-    - How to run the containers
-- File strukture
+- [How to run the code](#how-to-run-the-code)
+    - [Docker instalation](#docker-instalation)
+    - [Download the source code from repository and change all required parameters](#download-the-source-code-from-repository-and-change-all-required-parameters)
+    - [What to replace](#what-to-replace)
+    - [How to run the containers](#how-to-run-the-containers)
+- [File strukture](#file-strukture)
 
 
 # How to run the code
@@ -14,13 +14,13 @@
 
 - docker,
 - docker compose
-- docker-desktop \[optional\]
+- docker-desktop \[**optional**\]
 
 > Find the instruction in the internet
 
 ### Download the source code from repository and change all required parameters
 
-```Text
+```Bash
 ###--- How to replase the code
 variable = [IP_ADDRESS]
 
@@ -39,17 +39,19 @@ variable = 192.168.1.1
 		- \[user]
 		- \[password\]
 	- pgadmin
-		- \[EMAIL_address]
-		- \[password]
+		- \[EMAIL_address\]
+		- \[password\]
 - .env
     - \[user\]
     - \[pass\]
 - Prometheus conf
     - \[IP_ADDRESS\]
 
- > Username and password can be created and set by you. You will be using them later to log in to the system
+> [!NOTE]  
+> Username and password can be created and set by you. You will be using them later to log in to the system
 
- > IP_ADDRESS is the host addres where your docker is installed. That could be for example "localhost"   
+> [!WARNING]  
+> IP_ADDRESS is the host addres where your docker is installed. That could be for example "localhost"   
 
 ### How to run the containers:
 
