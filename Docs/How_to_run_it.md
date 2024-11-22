@@ -36,7 +36,7 @@ variable = 192.168.1.1
 
 | File Path | Section | placeholder | description |
 | --- | --- | --- | --- |
-| docker-compose.yml | redis | [set_up_the_password_here] | set up a password used to log in to redis server |
+| docker-compose.yml | Redis | [set_up_the_password_here] | set up a password used to log in to redis server |
 | docker-compose.yml | Kafka | [IP_ADDRESS] | set up here your IP address you want to use.  <br>Ex: localhost, home VM IP |
 | docker-compose.yml | PostgreSQL | [user]  <br>[password] | Set up password and username you want to use to log in |
 | docker-compose.yml | pgAdmin | [EMAIL_address]  <br>[password] | Set up an email with proper domain (like example.com, server.loc) and password |
