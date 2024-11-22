@@ -102,12 +102,6 @@ flowchart TD
                 end    
         end
 
-
-
-
-
-
-
 ```
 
 > FF - flowfile / event  
