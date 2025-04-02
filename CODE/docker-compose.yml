@@ -28,6 +28,37 @@ services:
       # nifi.web.http.port
       #   HTTP Port
       NIFI_WEB_HTTP_PORT: 8080
+
+  nifi2:
+    image: apache/nifi:2.3.0
+    container_name: nifi2
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ./Docker_Mount/V_NiFi_2_config:/opt/nifi/nifi-current/conf
+      - ./Docker_Mount/V_NiFi_VOLUME:/opt/nifi/nifi-current/VOLUME
+    ports:
+      # HTTP
+      # - 8081:8081/tcp
+      # HTTPS
+      - 8443:8443/tcp
+      # Remote Input Socket
+      # - 10000:10000/tcp
+      # JVM Debugger
+      #- 8000:8000/tcp
+      # Prometheus metrics
+      # - 29093:9093
+      # Cluster Node Protocol
+      #- 11443:11443/tcp
+    environment:
+      ########## Web ##########
+      # nifi.web.http.host
+      # NIFI_WEB_HTTP_HOST: '0.0.0.0'
+      NIFI_WEB_HTTPS_HOST: ''
+      # nifi.web.http.port
+      #   HTTP Port
+      # NIFI_WEB_HTTP_PORT: 8081
+      NIFI_WEB_HTTPS_PORT: 8443
 ###--NiFi-Registry---###################################################################################################
   registry:
     network_mode: bridge
@@ -117,3 +148,22 @@ services:
     environment:
         PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-[EMAIL_address]}
         PGADMIN_DEFAULT_PASSWORD: [password]
+###---Firefox---###################################################################################################
+  firefox:
+    image: lscr.io/linuxserver/firefox:latest
+    container_name: firefox
+    network_mode: bridge
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - FIREFOX_CLI=https://www.linuxserver.io/ #optional
+    volumes:
+      - /path/to/config:/config
+    ports:
+      - 3000:3000
+      - 3001:3001
+    shm_size: "1gb"
+    restart: unless-stopped

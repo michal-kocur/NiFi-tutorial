@@ -83,7 +83,7 @@ In this dataflow you will use what you have learned to build complex Incidents R
 In this task a X posts sentiment analyzer will be created. We will fetch 10 posts from X, then check their sentiment using python script and then, we will load properly transporm data to kafka topic.
 
 > [!TIP] 
-> For detailes go [here](./Tasks/):point_up: 
+> For detailes go [here](./Tasks/):point_up:
 
 # Solutions
 

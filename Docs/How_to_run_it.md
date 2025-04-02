@@ -34,7 +34,7 @@ variable = 192.168.1.1
 
 ### What to replace:
 
-| File Path | Section | placeholder | description |
+| File Path | Section | Placeholder | Description |
 | --- | --- | --- | --- |
 | docker-compose.yml | Redis | [set_up_the_password_here] | set up a password used to log in to redis server |
 | docker-compose.yml | Kafka | [IP_ADDRESS] | set up here your IP address you want to use.  <br>Ex: localhost, home VM IP |
@@ -94,3 +94,4 @@ sudo docker-compose down
         - V_NiFi_VOLUME/
         - .env
         - V_prometheus.yml
+        - V_NiFi_2_config

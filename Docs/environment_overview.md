@@ -14,7 +14,8 @@
 
 ### The Environment contains:
 
--  Apache NiFi
+-  Apache NiFi 1.20.0
+-  Apache NiFi 2.3.0
 -  Apache Nifi Registry
 -  Prometheus 
 -  S3 \[ minIO \]
@@ -33,7 +34,7 @@
 
 Apache NiFi is a powerful data routing and transformation system. It provides a graphical interface to design data flows and manage data processes in real-time. NiFi simplifies data ingestion, processing, and distribution across various systems and devices.
 > [!NOTE]  
-> In this project **NiFi** will be exposed on `http://[IP_ADDRESS]:8080`.
+> In this project **NiFi** will be exposed on `http://[IP_ADDRESS]:8080` for V1 and on `https://nifi.example.com:8443` for V2 with SSL and certs configured on that domain. To access it via your computer please add DNS record to your local `hosts` file
 
 ### NiFi Registry
 
@@ -85,13 +86,16 @@ pgAdmin is an open-source administration tool for PostgreSQL databases, offering
 > In this project **S3** will be exposed on `http://[IP_ADDRESS]:28080`.
 
 
-### Pointainer
+### Portainer
 
-Container with web user interface allowing us to manage and control other container in the docker. Web UI can be accessed on 9443 port. To be able to use this container go to **/CODE/Pointainer/** and run ```sudo docker-compose up -d``` in this folder
+Container with web user interface allowing us to manage and control other container in the docker. Web UI can be accessed on 9443 port. To be able to use this container go to **/CODE/Portainer/** and run ```sudo docker-compose up -d``` in this folder
 
 > [!NOTE]  
-> In this project **S3** will be exposed on `http://[IP_ADDRESS]:9443`.
+> In this project **S3** will be exposed on `https://[IP_ADDRESS]:9443`.
 
+### Firefox as a Container
+
+Container used as a jumphost for systems with strict restrictions for DNS changes or networking configuration. For details about this container go to DockerHub website [here](https://hub.docker.com/r/linuxserver/firefox)
 
 # Code:
 
@@ -128,6 +132,37 @@ services:
       # nifi.web.http.port
       #   HTTP Port
       NIFI_WEB_HTTP_PORT: 8080
+
+  nifi2:
+    image: apache/nifi:2.3.0
+    container_name: nifi2
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ./Docker_Mount/V_NiFi_2_config:/opt/nifi/nifi-current/conf
+      - ./Docker_Mount/V_NiFi_VOLUME:/opt/nifi/nifi-current/VOLUME
+    ports:
+      # HTTP
+      # - 8081:8081/tcp
+      # HTTPS
+      - 8443:8443/tcp
+      # Remote Input Socket
+      # - 10000:10000/tcp
+      # JVM Debugger
+      #- 8000:8000/tcp
+      # Prometheus metrics
+      # - 29093:9093
+      # Cluster Node Protocol
+      #- 11443:11443/tcp
+    environment:
+      ########## Web ##########
+      # nifi.web.http.host
+      # NIFI_WEB_HTTP_HOST: '0.0.0.0'
+      NIFI_WEB_HTTPS_HOST: ''
+      # nifi.web.http.port
+      #   HTTP Port
+      # NIFI_WEB_HTTP_PORT: 8081
+      NIFI_WEB_HTTPS_PORT: 8443
 ###--NiFi-Registry---###################################################################################################
   registry:
     network_mode: bridge
@@ -154,11 +189,13 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
+    restart: always
     ports:
       - "2181:2181"
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
+    restart: always
     ports:
       - "9092:9092"
     environment:
@@ -196,6 +233,7 @@ services:
     network_mode: bridge
     container_name: PostgreSQL
     image: 'postgres:latest'
+    restart: always
     ports:
       - 5432:5432
     environment:
@@ -207,12 +245,32 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pg_admin
+    restart: always
     ports:
       - 28080:80
     network_mode: bridge
     environment:
         PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-[EMAIL_address]}
         PGADMIN_DEFAULT_PASSWORD: [password]
+###---Firefox---###################################################################################################
+  firefox:
+    image: lscr.io/linuxserver/firefox:latest
+    container_name: firefox
+    network_mode: bridge
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - FIREFOX_CLI=https://www.linuxserver.io/ #optional
+    volumes:
+      - /path/to/config:/config
+    ports:
+      - 3000:3000
+      - 3001:3001
+    shm_size: "1gb"
+    restart: unless-stopped
 
 ```
 
