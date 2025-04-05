@@ -26,7 +26,9 @@
     - Use SQL query to retrieve data `SELECT * FROM users WHERE ck = '${userIdentity}';`.
 4.  **Convert data to JSON**:
     
-    - Use the `ConvertAvroToJson` processor to convert data to readable JSON format and `EvaluateJsonPath` to extract missing data from FF content after executing SQL query.
+    - **for NiFi 1.x:** Use the `ConvertAvroToJson` processor to convert data to readable JSON format and `EvaluateJsonPath` to extract missing data from FF content after executing SQL query.
+
+    - **for NiFi 2.x:** Use the `ConvertRecord` processor with `AvroReader` and `JsonRecordSetWriter` services to convert data to readable JSON format and `EvaluateJsonPath` to extract missing data from FF content after executing SQL query.
 5.  **Put "actionDetails" to FF content**:
     
     - Use `AttributesToJSON` processor to change content in the FF and then remove unwanted characters using `ReplaceText`.
@@ -34,7 +36,11 @@
     
     - Use `JoltTransformJSON` processor to adjust FF to required shape.
     - in case of any errors while processing resent **actionDetails** to FF content without removing unwanted characters and log that fact using `LogMessage` with proper comment
-7.  **Logging**:
+7.  **Send date to Kafka**
+
+    - Sent data to Apache Kafka using ```PublishKafka_2_6``` processor for NiFi 1.x and ```PublishKafka``` for NiFi 2.x
+
+8.  **Logging**:
     
     - Use the `LogAttribute` processor put **email** and **operation** to the logs without Properties and Payload of successfully processed FF.
 

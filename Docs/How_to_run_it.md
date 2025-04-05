@@ -40,10 +40,13 @@ variable = 192.168.1.1
 | docker-compose.yml | Kafka | [IP_ADDRESS] | set up here your IP address you want to use.  <br>Ex: localhost, home VM IP |
 | docker-compose.yml | PostgreSQL | [user]  <br>[password] | Set up password and username you want to use to log in |
 | docker-compose.yml | pgAdmin | [EMAIL_address]  <br>[password] | Set up an email with proper domain (like example.com, server.loc) and password |
-| Docker_Moint / .env | ---  | [user]  <br>[pass] | user and password used to log in to S3 GUI. Set up strong password with smal and large letter and numbers with at least 8 characters. It's required to run the container properly |
-| Docker_Moint / V_prometheus.yml | config / nifi | [IP_ADDRESS] | set up here your IP address you want to use.  <br>Ex: localhost, home VM IP |
+| Docker_Mount / .env | ---  | [user]  <br>[pass] | user and password used to log in to S3 GUI. Set up strong password with smal and large letter and numbers with at least 8 characters. It's required to run the container properly |
+| Docker_Mount / V_prometheus.yml | config / nifi | [IP_ADDRESS] | set up here your IP address you want to use.  <br>Ex: localhost, home VM IP |
 
 <br>
+
+> [!WARNING]  
+> in Docker_Mount / V_NiFi_2_config / cert certificates are created, please verify if they are not expired before running NiFi 2.x
 
 > [!IMPORTANT]  
 > Username and password can be created and set by you. You will be using them later to log in to the system

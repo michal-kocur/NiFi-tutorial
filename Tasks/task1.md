@@ -38,7 +38,9 @@ Create a dataflow allowing to count sum and product of 2 numbers provided in the
 
 6. **Send to Kafka**:
    - The transformed data are sent to Kafka.
-   - Processor name: ```PublishKafka_2_6```
+   - Processor name: 
+      - for NiFi 1.x:  ```PublishKafka_2_6```
+      - for NiFi 2.x:  ```PublishKafka```
 
 7. **Sent to Redis**:
    -  The transformed data are sent to Redis

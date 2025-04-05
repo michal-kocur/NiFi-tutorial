@@ -65,7 +65,9 @@ Create a dataflow which counts employee working time based on events (stop worki
 
 12. **Send to Kafka**:
    - Finally, the enriched and transformed FlowFile is sent to Kafka for further handling or distribution.
-   - Processor name: `PublishKafka_2_6`
+   - Processor name: 
+      - for NiFi 1.x:  ```PublishKafka_2_6```
+      - for NiFi 2.x:  ```PublishKafka```
 
 #### Enrichment Process
 
@@ -190,7 +192,7 @@ flowchart TD
 },
 {
   "name" : "Kasia",
-  "surname" : "Nowacka",```
+  "surname" : "Nowacka",
   "position" : "expert",
   "hourlyRate" : "50",
   "CK" : "AA44BB"

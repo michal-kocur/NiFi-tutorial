@@ -35,6 +35,7 @@ Here you can find code and files required to create an environment to work. If y
 >### Common issues description:
 >##### If NiFi cannot start correctly at first deploy (first creation)
 >- Give full permission access to V_NiFi_VOLUME directory (chmod 777 -R V_NiFi_VOLUME) or hash lines 9 10 in the docker-compose.yml (we are working on solving this issue)
+>- Give full permission access to V_NiFi_V2_config directory (chmod 777 -R V_NiFi_V2_config) or hash all nifi2 section in the docker-compose.yml if you do not need to use NiFi v2.3
 
 > [!TIP] 
 > For detailes go [here](./CODE/):point_up: 

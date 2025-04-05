@@ -48,6 +48,19 @@ output = [analysisPol, analysisSub]
 
 print(output)
 ```
+> to install textblob module use: `pip install textblob --break-system-packages` as *nifi* user
+
+
+### END event:
+
+```JSON
+{
+  "subjectivity" : "<number>",
+  "text" : "<string>",
+  "id" : "<string>",
+  "polarity" : "<number>"
+}
+```
 
 ## How to get X account
 Here we assume that you have already created and configured X account with API access. 
